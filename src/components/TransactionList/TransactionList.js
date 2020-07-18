@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useContext, lazy, Suspense } from "react";
+import { GlobalContext } from "../../context/GlobalState";
+
+const Transaction = lazy(() => import("../Transaction/Transaction"));
 
 const TransactionList = () => {
+  const { transactions } = useContext(GlobalContext);
+
   return (
     <>
       <h3>History</h3>
-      <ul id="list" class="list">
-        <li class="minus">
-          Cash <span>-$400</span>
-          <button class="delete-btn">x</button>
-        </li>
+      <ul className="list">
+        {transactions.map((transaction) => (
+          <Suspense fallback={<div>loading...</div>} key={transaction.id}>
+            <Transaction transaction={transaction} />
+          </Suspense>
+        ))}
       </ul>
     </>
   );
