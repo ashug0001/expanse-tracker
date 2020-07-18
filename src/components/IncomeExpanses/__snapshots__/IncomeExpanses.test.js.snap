@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IncomeExpanses should render initial layout 1`] = `
+<div
+  class="inc-exp-container"
+>
+  <div>
+    <h4>
+      Income
+    </h4>
+    <p
+      class="money plus"
+      id="money-plus"
+    >
+      +$0.00
+    </p>
+  </div>
+  <div>
+    <h4>
+      Expense
+    </h4>
+    <p
+      class="money minus"
+      id="money-minus"
+    >
+      -$0.00
+    </p>
+  </div>
+</div>
+`;
