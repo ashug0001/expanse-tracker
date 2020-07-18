@@ -7,6 +7,9 @@ const Balance = lazy(() => import("./components/Balance/Balance"));
 const IncomeExpanses = lazy(() =>
   import("./components/IncomeExpanses/IncomeExpanses")
 );
+const TransactionList = lazy(() =>
+  import("./components/TransactionList/TransactionList")
+);
 
 function App() {
   return (
@@ -19,6 +22,7 @@ function App() {
           <Suspense fallback="loading...">
             <Balance />
             <IncomeExpanses />
+            <TransactionList />
           </Suspense>
         </div>
       </ErrorBoundary>
