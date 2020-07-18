@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Balance should render initial layout 1`] = `
+<React.Fragment>
+  <h4>
+    Your Balance
+  </h4>
+  <h1
+    id="balance"
+  >
+    $0.00
+  </h1>
+</React.Fragment>
+`;
