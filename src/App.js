@@ -3,6 +3,7 @@ import "./App.css";
 
 import ErrorBoundary from "./ErrorBoundary";
 const Header = lazy(() => import("./components/Header/Header"));
+const Balance = lazy(() => import("./components/Balance/Balance"));
 
 function App() {
   return (
@@ -11,6 +12,11 @@ function App() {
         <Suspense fallback="loading...">
           <Header title="Expance Tracker" />
         </Suspense>
+        <div className="container">
+          <Suspense fallback="loading...">
+            <Balance />
+          </Suspense>
+        </div>
       </ErrorBoundary>
     </div>
   );
