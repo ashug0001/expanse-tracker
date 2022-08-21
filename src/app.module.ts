@@ -19,13 +19,9 @@ import { TransactionsModule } from './transactions/transactions.module';
       logging: process.env.NODE_ENV === 'development',
     }),
     TransactionsModule,
-    ...(process.env.NODE_ENV === 'production'
-      ? [
-          ServeStaticModule.forRoot({
-            rootPath: join(__dirname, '..', 'client', 'dist'),
-          }),
-        ]
-      : []),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'client', 'dist'),
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
