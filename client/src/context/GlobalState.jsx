@@ -1,5 +1,5 @@
 import React, { createContext, useReducer } from "react";
-import axios from "axios";
+import axios from "../utils/http";
 import AppReducer from "./AppReducer";
 
 // Initial State
@@ -18,6 +18,7 @@ export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
   async function getTransactions() {
+
     try {
       const res = await axios.get(`api/v1/transactions`);
       dispatch({
@@ -25,10 +26,11 @@ export const GlobalProvider = ({ children }) => {
         payload: res.data.transactions,
       });
     } catch (err) {
-      dispatch({
-        type: "TRANSACTIONS_ERROR",
-        payload: err.response.data.error,
-      });
+      console.log({err})
+      // dispatch({
+      //   type: "TRANSACTIONS_ERROR",
+      //   payload: err.response.data.error,
+      // });
     }
   }
 
