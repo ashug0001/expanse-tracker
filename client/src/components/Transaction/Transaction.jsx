@@ -1,22 +1,22 @@
-import React, { useContext } from "react";
-import PropTypes from "prop-types";
-import { GlobalContext } from "../../context/GlobalState";
-import { numberWithCommas } from "../../utils/format";
+import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
+import { GlobalContext } from '../../context/GlobalState';
+import { numberWithCommas } from '../../utils/format';
 
 const Transaction = ({ transaction }) => {
   const { deleteTransaction } = useContext(GlobalContext);
 
-  const sign = transaction.amount < 0 ? "-" : "+";
+  const sign = transaction.amount < 0 ? '-' : '+';
 
   return (
-    <li className={transaction.amount < 0 ? "minus" : "plus"}>
-      {transaction.text}{" "}
+    <li className={transaction.amount < 0 ? 'minus' : 'plus'}>
+      {transaction.text}{' '}
       <span>
         {sign}${numberWithCommas(Math.abs(transaction.amount))}
       </span>
       <button
         className="delete-btn"
-        onClick={() => deleteTransaction(transaction._id)}
+        onClick={() => deleteTransaction(transaction.id)}
       >
         x
       </button>

@@ -1,6 +1,6 @@
-import React, { createContext, useReducer } from "react";
-import axios from "../utils/http";
-import AppReducer from "./AppReducer";
+import React, { createContext, useReducer } from 'react';
+import axios from '../utils/http';
+import AppReducer from './AppReducer';
 
 // Initial State
 
@@ -18,54 +18,46 @@ export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
   async function getTransactions() {
-
     try {
       const res = await axios.get(`api/v1/transactions`);
       dispatch({
-        type: "GET_TRANSACTIONS",
-        payload: res.data.transactions,
+        type: 'GET_TRANSACTIONS',
+        payload: res,
       });
     } catch (err) {
-      console.log({err})
-      // dispatch({
-      //   type: "TRANSACTIONS_ERROR",
-      //   payload: err.response.data.error,
-      // });
+      dispatch({
+        type: 'TRANSACTION_ERROR',
+        payload: err.message,
+      });
     }
   }
 
   async function deleteTransaction(id) {
     try {
       await axios.delete(`api/v1/transactions/${id}`);
-
       dispatch({
-        type: "DELETE_TRANSACTION",
-        payload: id,
+        type: 'DELETE_TRANSACTION',
+        payload: +id,
       });
     } catch (err) {
       dispatch({
-        type: "TRANSACTIONS_ERROR",
-        payload: err.response.data.error,
+        type: 'TRANSACTIONS_ERROR',
+        payload: err.message,
       });
     }
   }
 
   async function addTransaction(transaction) {
-    const config = {
-      header: {
-        "Content-Type": "application/json",
-      },
-    };
     try {
-      const res = await axios.post(`api/v1/transactions`, transaction, config);
+      const res = await axios.post(`api/v1/transactions`, transaction);
       dispatch({
-        type: "ADD_TRANSACTION",
-        payload: res.data.transaction,
+        type: 'ADD_TRANSACTION',
+        payload: res.data,
       });
     } catch (err) {
       dispatch({
-        type: "TRANSACTIONS_ERROR",
-        payload: err.response.data.error,
+        type: 'TRANSACTIONS_ERROR',
+        payload: err.message,
       });
     }
   }

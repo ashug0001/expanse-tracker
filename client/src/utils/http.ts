@@ -24,9 +24,9 @@ class Http {
     }
   }
 
-  async port(url: string, data: {} = {}) {
+  async post(url: string, data: {} = {}) {
     try {
-      return await this.axios.put(url, {
+      return await this.axios.post(url, {
         ...data,
       });
     } catch (error: any) {
