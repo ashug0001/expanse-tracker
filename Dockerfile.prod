@@ -1,0 +1,38 @@
+ARG BASE_IMAGE=node:16.17.0-alpine
+
+FROM ${BASE_IMAGE} as client-deps
+WORKDIR /app
+COPY ./client/package.json ./client/yarn.lock ./
+RUN yarn install --frozen-lockfile
+
+FROM ${BASE_IMAGE} as client-builder
+WORKDIR /app
+COPY --from=client-deps /app/node_modules ./node_modules
+COPY ./client .
+RUN yarn build
+
+FROM ${BASE_IMAGE} as backend-deps
+WORKDIR /app
+COPY ./package.json ./yarn.lock ./
+RUN yarn install --frozen-lockfile
+
+FROM ${BASE_IMAGE} as backend-builder
+WORKDIR /app
+COPY --from=backend-deps /app/node_modules ./node_modules
+COPY . .
+RUN yarn build
+
+FROM ${BASE_IMAGE} as runner
+WORKDIR /app
+
+ENV NODE_ENV=production
+
+COPY --from=client-builder /app/package.json ./client/package.json
+COPY --from=client-builder /app/dist ./client/dist
+
+COPY --from=backend-builder /app/package.json ./package.json
+COPY --from=backend-builder /app/dist ./dist
+
+EXPOSE 3000
+
+CMD [ "node", 'dist/main' ]
