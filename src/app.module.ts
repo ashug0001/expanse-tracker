@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TransactionsModule } from './transactions/transactions.module';
@@ -17,6 +19,13 @@ import { TransactionsModule } from './transactions/transactions.module';
       logging: process.env.NODE_ENV === 'development',
     }),
     TransactionsModule,
+    ...(process.env.NODE_ENV === 'production'
+      ? [
+          ServeStaticModule.forRoot({
+            rootPath: join(__dirname, '..', 'client', 'dist'),
+          }),
+        ]
+      : []),
   ],
   controllers: [AppController],
   providers: [AppService],

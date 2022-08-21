@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { Transaction } from './transactions.model';
@@ -23,7 +23,7 @@ export class TransactionsService {
     return this.transactionModel.findOne({ where: { id } });
   }
 
-  remove(id: number): number {
-    return id;
+  remove(id: number): Promise<number> {
+    return this.transactionModel.destroy({ where: { id } });
   }
 }
